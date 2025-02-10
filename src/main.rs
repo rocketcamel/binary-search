@@ -36,18 +36,23 @@ fn search(numbers: &[u16], target: u16) -> Option<usize> {
     let mut low = 0;
     let mut high = numbers.len() - 1;
 
-    while low <= high {
+    while high != low {
         let mid = (low + high) / 2;
         let value = numbers[mid];
 
         println!("🔄 midpoint: {}, value: {}", mid, value);
 
-        match value.cmp(&target) {
-            std::cmp::Ordering::Equal => return Some(mid),
-            std::cmp::Ordering::Greater => high = mid - 1,
-            std::cmp::Ordering::Less => low = mid + 1,
+        if numbers[mid] > target {
+            high = mid - 1
+        } else {
+            low = mid + 1
         }
     }
+
+    if numbers[low] == target {
+        return Some(low);
+    }
+
     None
 }
 
